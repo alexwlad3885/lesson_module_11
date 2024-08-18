@@ -8,21 +8,28 @@ def module_funct(*args, **kwargs):        # проверочная функци�
 
 def introspection_info(obj):
     if not isinstance(obj, (int, float, str, tuple, list, dict, set)):
-        print(f'\nимя объекта:   {obj.__name__}')
+        name_object = obj.__name__
     else:
-        print(f'\n')
-    print(f'тип объекта:   {type(obj)}')
-    print(f'аттрибуты объекта:')
-    print([attr_name for attr_name in dir(obj) if not callable(getattr(obj, attr_name))])
-    print(f'методы объекта:')
-    print([attr_name for attr_name in dir(obj) if callable(getattr(obj, attr_name))])
-    print(f'модуль, к которому объект принадлежит:  {inspect.getmodule(obj)}')
-    print(f'идентификатор объекта:  {id(obj)}')
+        name_object = 'нет'
+    object_type = type(obj)
+    attr_object = [attr_name for attr_name in dir(obj) if not callable(getattr(obj, attr_name))]
+    object_methods = [attr_name for attr_name in dir(obj) if callable(getattr(obj, attr_name))]
+    object_module = inspect.getmodule(obj)
+    object_id = id(obj)
+    information_about_object = (f'имя объекта: {name_object}\n'
+                                f'тип объекта: {object_type}\n'
+                                f'аттрибуты объекта:\n'
+                                f'{attr_object}\n'
+                                f'методы объекта:\n'
+                                f'{object_methods}\n'
+                                f'модуль, к которому объект принадлежит:  {object_module}\n'
+                                f'идентификатор объекта:  {object_id}\n')
+    return information_about_object
 
 
 if __name__ == '__main__':
+    number_info = introspection_info(42)
+    print(number_info)
 
-    introspection_info(module_funct)
-
-    a = 42
-    introspection_info(a)
+    number_info = introspection_info(module_funct)
+    print(number_info)
